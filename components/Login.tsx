@@ -8,7 +8,7 @@ const Login = () => {
             <h1 className='text-[#B3C7D6] text-[5rem]'>Vocab App</h1>
             <button 
                 onClick={() => signIn('google')}
-                className='bg-[#98FF98] border rounded-xl w-[20rem] hover:opacity-50'
+                className='bg-[#98FF98] border rounded-xl w-[20rem] hover:opacity-50 cursor-pointer'
             >
                 <p className='text-[#000000] text-[2rem]'>Log in to Get Started</p>
             </button>
