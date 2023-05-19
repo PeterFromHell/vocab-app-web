@@ -2,7 +2,7 @@
 import { signIn } from 'next-auth/react'
 import React from 'react'
 
-const Login = () => {
+const Login: React.FC = () => {
     return (
         <div className='w-screen h-screen bg-[#34353F] flex flex-col justify-center items-center'>
             <h1 className='text-[#B3C7D6] text-[5rem]'>Vocab App</h1>

@@ -5,7 +5,7 @@ type Props = {
     profilePic: string
 }
 
-const Logout = ({profilePic}: Props) => {
+const Logout: React.FC<Props> = ({profilePic}: Props) => {
     return (
         <img
             onClick={() => signOut()}

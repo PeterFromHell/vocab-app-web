@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -9,7 +10,7 @@ type Props = {
     change: any
 }
 
-const PopupWindow = ({change}:Props) => {
+const PopupWindow: React.FC<Props> = ({change}:Props) => {
     const [prompt, setPrompt] = React.useState('')
     const { data: session } = useSession()
     const router = useRouter()

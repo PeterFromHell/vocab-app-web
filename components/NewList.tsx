@@ -5,7 +5,7 @@ type Props = {
     handleClick: () => void
 }
 
-const NewList = ({handleClick}: Props) => {
+const NewList: React.FC<Props> = ({handleClick}: Props) => {
     return (
         <div 
             className='rounded-full w-12 border border-spacing-2 absolute bottom-0 right-0 m-3 cursor-pointer'
