@@ -31,6 +31,7 @@ const CreateVocabPopupWindow: React.FC<Props> = ({handleClick, listId}: Props) =
             english: eng,
             chinese: chi,
             partOfSpeech: part,
+            star: 0
         }
 
         await addDoc(

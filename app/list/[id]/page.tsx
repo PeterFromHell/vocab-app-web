@@ -32,16 +32,18 @@ const ListPage: React.FC<Props> = ({params: {id} }: Props) => {
         setOpenPopupWindow(false)
     }
     return (
-        <div className='w-screen h-screen flex flex-col items-center justify-center'>
+        <div className='w-screen h-screen flex flex-col items-center justify-center overflow-scroll'>
             {openPopupWindow && (
                 <CreateVocabPopupWindow handleClick={cancel} listId={id} />
             )}
-            {vocabs?.docs.map(vocab => (
-                <VocabCard vocab={vocab.data()} key={vocab.id}/>
-            ))}
+            <div className='absolute space-y-5'>
+                {vocabs?.docs.map(vocab => (
+                    <VocabCard vocab={vocab.data()} key={vocab.id} vocabId={vocab.id} listId={id}/>
+                ))}
+            </div>
             <NewVocab  handleClick={popup}/>
             <ToHome />
-            <div className='border w-screen h-[5rem] absolute bottom-0 bg-[#00BFFF] flex items-center justify-center hover:opacity-80 cursor-pointer'>
+            <div className='w-screen h-[5rem] absolute bottom-0 bg-[#00BFFF] flex items-center justify-center hover:opacity-80 cursor-pointer'>
                 <p className='text-[2rem] text-[#FFFFFF]'>Open Vocab Cards</p>
             </div>
         </div>

@@ -15,4 +15,5 @@ interface Vocab {
     english: string!
     chinese: string!
     partOfSpeech: string!
+    star: number
 }
