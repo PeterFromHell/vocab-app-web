@@ -46,7 +46,7 @@ const PopupWindow: React.FC<Props> = ({change}:Props) => {
     } 
 
     return (
-        <div className='border w-[30rem] h-[20rem] rounded-3xl relative'>
+        <div className='w-[30rem] h-[20rem] rounded-3xl relative bg-[#333333] z-10'>
           <span className='text-white text-[2rem] m-6'>Name of your new list:</span>
 
           <form onSubmit={createNewList}>

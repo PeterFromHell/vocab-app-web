@@ -1,9 +1,8 @@
 import { getServerSession } from 'next-auth'
 import './globals.css'
 import { SessionProvider } from '@/components/SessionProvider'
-import { authOptions } from './api/auth/[...nextauth]/route'
 import Login from '@/components/Login'
-
+import { authOptions } from './api/auth/[...nextauth]/route'
 
 export const metadata = {
   title: 'Create Next App',
@@ -23,7 +22,7 @@ export default async function RootLayout({
           {!session ? (
             <Login />
           ): (
-            <div>
+            <div className='bg-[#34353F]'>
               {children}
             </div>
           )}
