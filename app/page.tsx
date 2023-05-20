@@ -39,7 +39,11 @@ const HomePage: React.FC = () => {
           <h4 className='text-[#B7C6D4]'>Please wait ...</h4>
         )}
         {lists?.docs.map(list => (
-          <Link className='py-5' href={`/list/${list.id}`} key={list.id}>
+          <Link 
+            className='py-5' 
+            href={`/list/${list.id}`} 
+            key={list.id}
+          >
             <ListCard key={list.id} id={list.id} list={list.data()} />
           </Link>
         ))}

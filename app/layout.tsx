@@ -22,7 +22,7 @@ export default async function RootLayout({
           {!session ? (
             <Login />
           ): (
-            <div className='bg-[#34353F]'>
+            <div>
               {children}
             </div>
           )}

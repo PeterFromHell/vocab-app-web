@@ -72,6 +72,7 @@ const CreateVocabPopupWindow: React.FC<Props> = ({handleClick, listId}: Props) =
                         type='input'
                         value={partPrompt}
                         onChange={e => setPartPrompt(e.target.value)}
+                        placeholder='(n. v. adj. adv. prep. phrase. ...)'
                     />
                 </div>
                 <button 
