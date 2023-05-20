@@ -3,15 +3,16 @@ import React from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
-import { db} from '@/firebase'
+import { db } from '@/firebase'
 import { List } from '@/typings'
 
 type Props = {
     change: any
 }
 
-const PopupWindow: React.FC<Props> = ({change}:Props) => {
+const CreateListPopupWindow: React.FC<Props> = ({change}:Props) => {
     const [prompt, setPrompt] = React.useState('')
+    const [stars, setStars] = React.useState(0)
     const { data: session } = useSession()
     const router = useRouter()
 
@@ -25,6 +26,7 @@ const PopupWindow: React.FC<Props> = ({change}:Props) => {
         const list: List = {
           name: input,
           createdAt: serverTimestamp(),
+          stars,
           user: {
             _id: session?.user?.email!,
             name: session?.user?.name!,
@@ -32,7 +34,6 @@ const PopupWindow: React.FC<Props> = ({change}:Props) => {
               `https://ui-avatars.com/api/?name=${session?.user?.name}`,
           },
         }
-        console.log('submitted')
         const doc = await addDoc(
           collection(
             db,
@@ -74,4 +75,4 @@ const PopupWindow: React.FC<Props> = ({change}:Props) => {
     )
 }
 
-export default PopupWindow
+export default CreateListPopupWindow

@@ -10,7 +10,7 @@ type Props = {
     id: string
 }
 
-const ListCard = ({list, id}: Props) => {
+const ListCard: React.FC<Props> = ({list, id}: Props) => {
     const { data: session } = useSession()
     const router = useRouter()
     const removeList = async () => {
@@ -27,7 +27,7 @@ const ListCard = ({list, id}: Props) => {
             <h2 className='text-[#006400] m-4 text-[5rem]'>{list.name}</h2>
             <div className='flex flex-row  items-center justify-between'>
                 {/* Date not completely good. Modify it in the future. 5/20/2023. */}
-                <p className='text-[#333333] text-[1.5rem] m-4'>{`Created: ${new Date(list.createdAt.seconds * 1000).toDateString()}`}</p>
+                <p className='text-[#333333] text-[1.5rem] m-4'>{`Created: ${new Date(list.createdAt?.seconds * 1000).toDateString()}`}</p>
                 <TrashIcon onClick={removeList} className='text-[#333333] w-8 m-4' />
             </div>
         </div>
