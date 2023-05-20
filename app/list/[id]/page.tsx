@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import Link from 'next/link'
 import NewVocab from '@/components/NewVocab'
 import ToHome from '@/components/ToHome'
 import CreateVocabPopupWindow from '@/components/CreateVocabPopupWindow'
@@ -32,7 +33,7 @@ const ListPage: React.FC<Props> = ({params: {id} }: Props) => {
         setOpenPopupWindow(false)
     }
     return (
-        <div className='w-screen h-screen flex flex-col items-center justify-center overflow-scroll'>
+        <div className='w-screen h-screen flex flex-col items-center justify-center'>
             {openPopupWindow && (
                 <CreateVocabPopupWindow handleClick={cancel} listId={id} />
             )}
@@ -43,9 +44,9 @@ const ListPage: React.FC<Props> = ({params: {id} }: Props) => {
             </div>
             <NewVocab  handleClick={popup}/>
             <ToHome />
-            <div className='w-screen h-[5rem] absolute bottom-0 bg-[#00BFFF] flex items-center justify-center hover:opacity-80 cursor-pointer'>
+            <Link href={`/list/${id}/vocab`} className='w-screen h-[5rem] absolute bottom-0 bg-[#00BFFF] flex items-center justify-center hover:opacity-80 cursor-pointer'>
                 <p className='text-[2rem] text-[#FFFFFF]'>Open Vocab Cards</p>
-            </div>
+            </Link>
         </div>
     )
 }
