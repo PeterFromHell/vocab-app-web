@@ -42,7 +42,7 @@ const VocabCard: React.FC<Props> = ({vocab, vocabId, listId}: Props) => {
         )
     }
     return (
-        <div className=' bg-[#98FF98] w-[75rem] rounded-2xl flex flex-col pt-3'>
+        <div className=' bg-[#98FF98] w-[75rem] rounded-2xl flex flex-col pt-3 border-4'>
             <div className='w-[75rem] flex flex-row place-content-end pr-2'>
                 <StarIcon  className={`w-[2rem] ${vocab.star >= 5 && 'bg-[#FFFF00]'}`}/>
                 <StarIcon  className={`w-[2rem] ${vocab.star >= 4 && 'bg-[#FFFF00]'}`}/>
@@ -50,7 +50,7 @@ const VocabCard: React.FC<Props> = ({vocab, vocabId, listId}: Props) => {
                 <StarIcon  className={`w-[2rem] ${vocab.star >= 2 && 'bg-[#FFFF00]'}`}/>
                 <StarIcon  className={`w-[2rem] ${vocab.star >= 1 && 'bg-[#FFFF00]'}`}/>
             </div>
-            <table className=' w-[75rem]'>
+            <table className=' w-[75rem] border-4'>
                 <tbody>
                     <tr>
                         <td className=' w-[45%]'>

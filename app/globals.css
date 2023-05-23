@@ -5,3 +5,8 @@
 body {
     background-color: #34353F;
 }
+
+.rotateCard {
+    transform: rotateY(180deg);
+    transform-origin: center;
+}
