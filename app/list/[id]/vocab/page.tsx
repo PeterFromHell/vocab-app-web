@@ -4,39 +4,56 @@ import { useRandomArray } from '@/hooks/useRandomArray'
 import { collection, query, getDoc, doc, getDocs, QuerySnapshot, DocumentData, onSnapshot } from 'firebase/firestore'
 import { useSession } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useCollection } from 'react-firebase-hooks/firestore'
 
-type VocabRef = QuerySnapshot<DocumentData> | undefined
+interface Vocabulary {
+    English: string
+    Chinese: string
+    PartOfSpeech: string
+}
 
-const VocabPage = async () => {
+const VocabPage = () => {
     const { data: session } = useSession()
     const [flip, setFlip] = React.useState(false)
-    const [vocabCount, setVocabCount] = React.useState()
+    const [currentVocab, setCurrentVocab] = React.useState<Vocabulary | null>(null)
     const pathname = usePathname()
     const listId: string = pathname.slice(6).slice(0, 20)
 
-    const testArray = [{English:'a',Chinese:'A',}, {English:'b',Chinese:'B',}, {English:'c',Chinese:'C',}, {English:'d',Chinese:'D',}, {English:'e',Chinese:'E',}, {English:'f',Chinese:'F',}]
-    const shuffleTestArray = useRandomArray(testArray)
-    console.log(shuffleTestArray)
-    const nextVocab = () => {
+    const [array, setArray] = useState<Vocabulary[]>([])
 
-    }
-
-    const array: any[] = []
-
-    const unsubscribe = onSnapshot(
-        query(
-            collection(db, 'users', session?.user?.email!, 'lists', listId, 'vocabs')
-        ), (snapshot) => {
-            snapshot.forEach((doc) => {
-                array.push({English: doc.data().english, Chinese: doc.data().chinese, PartOfSpeech: doc.data().partOfSpeech})
-            });
+    useEffect(() => {
+        const unsubscribe = onSnapshot(
+            query(
+                collection(db, 'users', session?.user?.email!, 'lists', listId, 'vocabs')
+            ), (snapshot) => {
+                const fetchedArray: Vocabulary[] = []
+                snapshot.forEach((doc) => {
+                    fetchedArray.push({
+                        English: doc.data().english,
+                        Chinese: doc.data().chinese,
+                        PartOfSpeech: doc.data().partOfSpeech
+                    })
+                })
+                setArray(fetchedArray)
+            }
+        )
+        return () => {
             unsubscribe()
         }
-    )
-    const shuffledArray = useRandomArray(array)
-    console.log(shuffledArray)
+    }, [])
+
+    const nextVocab = useCallback(() => {
+        if ( array.length > 0 ) {
+            const randomNumber = Math.floor(Math.random() * array.length)
+            const newArray = [...array]
+            const removedItem = newArray.splice(randomNumber, 1)[0]
+            setArray(newArray)
+            setCurrentVocab(removedItem)
+        } else {
+            alert('the array is empty!')
+        }
+    }, [array])
 
 
     const flipCard = () => {
@@ -44,8 +61,9 @@ const VocabPage = async () => {
     }
     return (
         <div className='h-screen w-screen grid place-items-center'>
-            <div className={`w-[75rem] h-[35rem] border bg-[#B7C6D4] rounded-[4rem] flex items-center justify-center mt-4 ${flip && 'rotateCard'} duration-500`} onClick={flipCard}>
-                <h1 className='text-center text-[10rem]'>{vocabCount}</h1>
+            <div className={`w-[75rem] h-[35rem] border bg-[#B7C6D4] rounded-[4rem] flex flex-col items-center justify-center mt-4 ${flip && 'rotateCard'} duration-500`} onClick={flipCard}>
+                <h1 className={`text-center text-[10rem] ${flip && 'rotate-text'}`}>{!flip ? currentVocab?.English : currentVocab?.Chinese}</h1>
+                <p className={`text-center text-[3.5rem] ${flip && 'rotate-text'}`}>{currentVocab?.PartOfSpeech}</p>
             </div>
             <div className='h-[5rem] w-screen absolute bottom-0 flex flex-row items-center justify-center'>
                 <div className='w-1/3 border h-full bg-red-500'>a</div>

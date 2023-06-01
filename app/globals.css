@@ -10,3 +10,9 @@ body {
     transform: rotateY(180deg);
     transform-origin: center;
 }
+
+.rotate-text {
+    transform: rotateY(180deg);
+    transform-origin: center;
+}
+
