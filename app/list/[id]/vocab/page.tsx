@@ -1,11 +1,9 @@
 'use client'
 import { db } from '@/firebase'
-import { useRandomArray } from '@/hooks/useRandomArray'
-import { collection, query, getDoc, doc, getDocs, QuerySnapshot, DocumentData, onSnapshot, deleteDoc } from 'firebase/firestore'
+import { collection, query, doc, onSnapshot, deleteDoc } from 'firebase/firestore'
 import { useSession } from 'next-auth/react'
-import { usePathname } from 'next/navigation'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useCollection } from 'react-firebase-hooks/firestore'
+import { redirect, useRouter } from 'next/navigation'
+import React, { useCallback, useEffect, useState } from 'react'
 
 interface Vocabulary {
     English: string
@@ -22,12 +20,15 @@ type Props = {
 
 const VocabPage = ({params: {id}}: Props) => {
     const { data: session } = useSession()
+    const router = useRouter()
     const [flip, setFlip] = React.useState<boolean>(false)
     const [currentVocab, setCurrentVocab] = React.useState<Vocabulary | null>(null)
     const listId: string = id
 
     const [array, setArray] = useState<Vocabulary[]>([])
     const [vocabId, setVocabId] = useState<string>('')
+
+
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -40,7 +41,7 @@ const VocabPage = ({params: {id}}: Props) => {
                         English: doc.data().english,
                         Chinese: doc.data().chinese,
                         PartOfSpeech: doc.data().partOfSpeech,
-                        vocabId: doc.id
+                        vocabId: doc.id,
                     })
                 })
                 setArray(fetchedArray)
@@ -60,7 +61,7 @@ const VocabPage = ({params: {id}}: Props) => {
             setCurrentVocab(removedItem)
             setVocabId(removedItem.vocabId)
         } else {
-            alert('the array is empty!')
+            router.push(`/list/${listId}`)
         }
     }, [array])
 
@@ -90,9 +91,8 @@ const VocabPage = ({params: {id}}: Props) => {
                 <p className={`text-center text-[3.5rem] ${flip && 'rotate-text'}`}>{currentVocab?.PartOfSpeech}</p>
             </div>
             <div className='h-[5rem] w-screen absolute bottom-0 flex flex-row items-center justify-center'>
-                <div className='w-1/3 border h-full bg-red-500 cursor-pointer'><p className='text-[#000000] text-center text-[3rem]' onClick={deleteVocab}>Delete</p></div>
-                <div className='w-1/3 border h-full bg-yellow-300'><p className='text-[#000000] text-center text-[3rem]'>Star</p></div>
-                <div className='w-1/3 border h-full bg-[#00BFFF] cursor-pointer' onClick={nextVocab}><p className='text-[#000000] text-center text-[3rem]'>Next</p></div>
+                <div className='w-1/2 border h-full bg-red-500 cursor-pointer' onClick={deleteVocab}><p className='text-[#000000] text-center text-[3rem]'>Delete</p></div>
+                <div className='w-1/2 border h-full bg-[#00BFFF] cursor-pointer' onClick={nextVocab}><p className='text-[#000000] text-center text-[3rem]'>Next</p></div>
             </div>
         </div>
     )
